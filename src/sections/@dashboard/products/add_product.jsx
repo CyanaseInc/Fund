@@ -21,7 +21,7 @@ const AddProductButton = () => {
   const [minimumDeposit, setMinimumDeposit] = useState("");
   const [numberOfUnits, setNumberOfUnits] = useState("");
   const [interestRate, setInterestRate] = useState("");
-    const [Management, setManagement] = useState("");
+  const [Management, setManagement] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,17 +47,16 @@ const AddProductButton = () => {
     // Make a POST request using axios
     axios.post(saveUrl, {
       email: user.user.email,
-     InvName:investmentClassName,
+      InvName: investmentClassName,
       fundValue,
-      mini:minimumDeposit,
-     units: numberOfUnits,
-Intrest:interestRate,
-fee: Management,
-      selectedOptions:selectedOption,
+      mini: minimumDeposit,
+      units: numberOfUnits,
+      Intrest: interestRate,
+      fee: Management,
+      selectedOptions: selectedOption,
     })
       .then((response) => {
-       
-        if(response.data.success === true){
+        if (response.data.success === true) {
           setProcessing(false);
           window.location.reload();
         } else {
@@ -67,7 +66,7 @@ fee: Management,
         }
       })
       .catch((errors) => {
-        console.errors("Error saving data:", errors);
+        console.error("Error saving data:", errors);
         setProcessing(false);
       });
   };
@@ -98,21 +97,22 @@ fee: Management,
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
+            overflowY: "auto", // Enable vertical scrolling
+            maxHeight: "80vh", // Limit height to 80% of viewport
           }}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add New Product
           </Typography>
           <form>
-          <Button
-  variant="contained"
-  onClick={handleClose}
-  onKeyDown={(e) => e.key === 'Enter' && handleClose()}
-  color="secondary"
->
-  X
-</Button>
-
+            <Button
+              variant="contained"
+              onClick={handleClose}
+              onKeyDown={(e) => e.key === 'Enter' && handleClose()}
+              color="secondary"
+            >
+              X
+            </Button>
             <TextField
               label="Investment Class Name"
               value={investmentClassName}
@@ -162,7 +162,7 @@ fee: Management,
               error={error && !interestRate}
               helperText={error && !interestRate && "Interest rate is required"}
             />
-                        <TextField
+            <TextField
               label="Management fees in %"
               type="number"
               value={Management}
@@ -170,7 +170,7 @@ fee: Management,
               fullWidth
               margin="normal"
               error={error && !Management}
-              helperText={error && ! Management && "Fees are required"}
+              helperText={error && !Management && "Fees are required"}
             />
             <TextField
               select
@@ -189,7 +189,6 @@ fee: Management,
                 </MenuItem>
               ))}
             </TextField>
-
             <Button variant="contained" onClick={handleSave} color="primary" disabled={processing}>
               {processing ? "Processing..." : "Save"}
             </Button>

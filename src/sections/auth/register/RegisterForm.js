@@ -25,7 +25,7 @@ const [selectedCountry, setSelectedCountry] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    companyName: Yup.string().required('First name required'),
+    companyName: Yup.string().required('Organisation name required'),
     myCountryCode: Yup.string().required(' counyry is required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -101,7 +101,7 @@ const [selectedCountry, setSelectedCountry] = useState('');
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="companyName" label="First name" />
+          <RHFTextField name="companyName" label="Organisation name" />
           
         </Stack>
 
