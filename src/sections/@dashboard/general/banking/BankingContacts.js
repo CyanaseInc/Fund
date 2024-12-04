@@ -49,6 +49,7 @@ export default function BankingContacts() {
     'Opening Balance (UGX)',
     'Deposit Amount (UGX)',
     'Interest (%)',
+    'Out performance fee (UGX)',
     'Management Fee (UGX)',
     'Performance Fee (UGX)',
     'Withdraw Amount (UGX)',
@@ -92,39 +93,41 @@ export default function BankingContacts() {
         ))}
 
         {/* Render dynamic tables for each investment class */}
-        {Object.keys(organisedData).map((option, index) => (
-          <Box key={index} sx={{ mt: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              {option} Investments
-            </Typography>
+    {Object.keys(organisedData).map((option, index) => (
+  <Box key={index} sx={{ mt: 3 }}>
+    <Typography variant="h6" sx={{ mb: 2 }}>
+      {option} Investments
+    </Typography>
 
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    {tableHeaders.map((header) => (
-                      <TableCell key={header}>{header}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {organisedData[option].map((item, itemIndex) => (
-                    <TableRow key={itemIndex}>
-                      <TableCell>{item.opening_balance}</TableCell>
-                      <TableCell>{item.deposit_amount}</TableCell>
-                      <TableCell>{item.interest}</TableCell>
-                      <TableCell>{item.management_fee}</TableCell>
-                      <TableCell>{item.performance_fee}</TableCell>
-                      <TableCell>{item.withdraw_amount}</TableCell>
-                      <TableCell>{item.closing_balance}</TableCell>
-                      <TableCell>{item.created}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-        ))}
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {tableHeaders.map((header) => (
+              <TableCell key={header}>{header}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+<TableBody>
+  {organisedData[option].map((item, itemIndex) => (
+    <TableRow key={itemIndex}>
+      <TableCell>{Number(item.opening_balance).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.deposit_amount).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.interest).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.out_performance).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.outperformance_fee).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.management_fee).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.performance_fee).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.withdraw_amount).toLocaleString()}</TableCell>
+      <TableCell>{Number(item.closing_balance).toLocaleString()}</TableCell>
+      <TableCell>{item.created ? new Date(item.created).toLocaleString() : '-'}</TableCell>
+    </TableRow>
+  ))}
+</TableBody>
+      </Table>
+    </TableContainer>
+  </Box>
+))}
       </Stack>
     </Card>
   );

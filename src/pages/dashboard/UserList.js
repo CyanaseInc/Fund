@@ -137,6 +137,7 @@ const steps = ['Personal Information', 'Contact Information', 'Other Details'];
     const filteredData = applySortFilter(userListed, getComparator(order, orderBy), filterName);
     setFilteredUsers(filteredData);
     setIsDataLoaded(true);
+
   }, [userListed, filterName, orderBy, order]);
 
   const isNotFound = !filteredUsers.length && Boolean(filterName);
@@ -408,66 +409,51 @@ const steps = ['Personal Information', 'Contact Information', 'Other Details'];
                   onSelectAllClick={handleSelectAllClick}
                 />
                 {isDataLoaded && (
-                  <TableBody>
-                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                      const isItemSelected = selected.indexOf(row.last_name) !== -1;
+<TableBody>
+  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+    const isItemSelected = selected.indexOf(row.last_name) !== -1;
 
-                      return (
-                      
-                        <TableRow
-                          hover
-                          key={index}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                          onClick={() => seeUser(row.user_id)} // Attach click event handler here
-  style={{ cursor: 'pointer' }}
-                        >
-                       
-                          <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Avatar alt={row.name} src={`https://server.cyanase.app/media/profile/${row.profile_picture}`} sx={{ mr: 2 }}  />
-                            <Typography variant="subtitle2" noWrap>
-      {row.first_name}    {row.last_name} 
-                            </Typography>
-                          </TableCell>
-                          <TableCell align="left">{row.phoneno}</TableCell>
-                          <TableCell align="left">
-                         { row.email}
-</TableCell>
-                          <TableCell align="left">
-                         { row.name}
-</TableCell>
-                          <TableCell align="left">
-                         { row.opening_balance}
-</TableCell>
-                          <TableCell align="left">
-                         { row.deposit_amount}
-</TableCell>
-                          <TableCell align="left">
-                         { row.interest}
-</TableCell>
-                          <TableCell align="left">
-                         { row.performance_fee}
-</TableCell>
-                          <TableCell align="left">
-                         { row.management_fee}
-</TableCell>
-                          <TableCell align="left">
-                         { row.withdraw_amount}
-</TableCell>
-                          <TableCell align="left">
-                         { row.closing_balance}
-</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
-                    )}
-                  </TableBody>
+    // Function to format numbers with commas
+    const formatNumber = (number) => {
+      return new Intl.NumberFormat('en-US').format(number);
+      
+    };
+
+    return (
+      <TableRow
+        hover
+        key={index}
+        tabIndex={-1}
+        role="checkbox"
+        selected={isItemSelected}
+        aria-checked={isItemSelected}
+        onClick={() => seeUser(row.user_id)}
+        style={{ cursor: 'pointer' }}
+      >
+        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar
+            alt={row.name}
+            src={`https://server.cyanase.app/media/profile/${row.profile_picture}`}
+            sx={{ mr: 2 }}
+          />
+          <Typography variant="subtitle2" noWrap>
+            {row.first_name} {row.last_name}
+          </Typography>
+        </TableCell>
+        <TableCell align="left">{row.phoneno}</TableCell>
+        <TableCell align="left">{row.email}</TableCell>
+        <TableCell align="left">{row.name}</TableCell>
+        <TableCell align="left">{formatNumber(row.opening_balance)}</TableCell>
+        <TableCell align="left">{formatNumber(row.deposit_amount)}</TableCell>
+        <TableCell align="left">{formatNumber(row.interest)}</TableCell>
+        <TableCell align="left">{formatNumber(row.performance_fee)}</TableCell>
+        <TableCell align="left">{formatNumber(row.management_fee)}</TableCell>
+        <TableCell  align="left">{formatNumber(row.withdraw_amount)}</TableCell>
+        <TableCell align="left">{formatNumber(row.closing_balance)}</TableCell>
+      </TableRow>
+    );
+  })}
+</TableBody>
                 )}
                 {isNotFound && (
                   <TableBody>
